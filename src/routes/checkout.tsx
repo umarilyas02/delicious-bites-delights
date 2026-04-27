@@ -273,6 +273,12 @@ function CheckoutPage() {
           <p className="mt-3 text-xs text-muted-foreground text-center">
             Your order will be sent to <span className="font-semibold">0303 083 83 89</span> on WhatsApp for confirmation.
           </p>
+          <Link
+            to="/settings/message-template"
+            className="mt-2 block text-center text-[11px] text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
+          >
+            Customize message template
+          </Link>
         </aside>
       </form>
     </div>
