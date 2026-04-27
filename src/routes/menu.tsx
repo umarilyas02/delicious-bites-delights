@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import menuPizza from "@/assets/menu-pizza.jpg";
-import { Plus, Check } from "lucide-react";
-import { menuSections, formatPrice } from "@/lib/menu-data";
+import { Plus, Check, MessageCircle, ShoppingBag } from "lucide-react";
+import { menuSections, findItem, formatPrice } from "@/lib/menu-data";
 import { useCart } from "@/lib/cart-context";
 import { useState } from "react";
+
+const WHATSAPP_NUMBER = "923030838389";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -39,6 +41,61 @@ function AddButton({ id }: { id: string }) {
       {added ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
       {added ? "Added" : "Add to cart"}
     </button>
+  );
+}
+
+function QuickOrderBar() {
+  const { lines, subtotal, count } = useCart();
+
+  if (count === 0) return null;
+
+  const sendQuickOrder = () => {
+    const itemLines = lines
+      .map((l) => {
+        const it = findItem(l.id);
+        if (!it) return null;
+        return `• ${l.qty}× ${it.name} — ${formatPrice(it.price * l.qty)}`;
+      })
+      .filter(Boolean)
+      .join("\n");
+
+    const message =
+      `*Quick Order — Delicious Bites*\n\n` +
+      `*Items*\n${itemLines}\n\n` +
+      `*Total: ${formatPrice(subtotal)}*\n\n` +
+      `Hi! I'd like to place this order. Please confirm availability and delivery/pickup details.`;
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-40 px-3 pb-3 sm:px-6 sm:pb-6 pointer-events-none">
+      <div
+        className="pointer-events-auto mx-auto flex max-w-xl items-center gap-3 rounded-2xl bg-card p-3 sm:p-4"
+        style={{ boxShadow: "var(--shadow-elegant, 0 10px 40px -10px rgba(0,0,0,0.35))" }}
+      >
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <ShoppingBag className="h-5 w-5" />
+          <span className="sr-only">{count} items</span>
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-xs text-muted-foreground leading-tight">
+            {count} {count === 1 ? "item" : "items"} · {formatPrice(subtotal)}
+          </p>
+          <p className="text-sm font-semibold leading-tight">Quick Order</p>
+        </div>
+        <button
+          type="button"
+          onClick={sendQuickOrder}
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-95 transition-opacity active:scale-95 min-h-11"
+          aria-label="Send order on WhatsApp"
+        >
+          <MessageCircle className="h-4 w-4" />
+          <span>WhatsApp</span>
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -102,6 +159,9 @@ function MenuPage() {
           </section>
         ))}
       </div>
+      <QuickOrderBar />
+      {/* spacer so last item isn't hidden behind the floating bar */}
+      <div aria-hidden className="h-24" />
     </>
   );
 }
