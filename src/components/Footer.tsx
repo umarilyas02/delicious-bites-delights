@@ -28,9 +28,13 @@ export function Footer() {
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wider text-accent mb-4">Visit</h4>
           <p className="text-sm text-cream/70 leading-relaxed">
-            Chenab Rangers Road<br />
+            Rangers Road<br />
             Near Cash & Carry<br />
             Open 11am – 11pm
+          </p>
+          <p className="text-xs text-cream/50 mt-3 leading-relaxed">
+            Min order Rs. 1,000<br />
+            Free home delivery within 3 km
           </p>
         </div>
 
@@ -39,8 +43,8 @@ export function Footer() {
           <a href="tel:+923030838389" className="flex items-center gap-2 text-sm text-cream/70 hover:text-cream transition-colors">
             <Phone className="h-4 w-4" /> 0303 083 83 89
           </a>
-          <a href="tel:+925245819199" className="mt-2 flex items-center gap-2 text-sm text-cream/70 hover:text-cream transition-colors">
-            <Phone className="h-4 w-4" /> 0524 581 919
+          <a href="tel:+925245819019" className="mt-2 flex items-center gap-2 text-sm text-cream/70 hover:text-cream transition-colors">
+            <Phone className="h-4 w-4" /> 052 458 1919
           </a>
         </div>
       </div>
