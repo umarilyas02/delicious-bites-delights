@@ -40,35 +40,66 @@ const make = (
 
 export const menuSections: MenuSection[] = [
   {
-    title: "Pizzas",
-    subtitle: "Classic, Royal & Signature — small to XL",
+    title: "Classic Pizza",
+    subtitle: "Small · Medium · Large · XL",
     img: menuPizza,
-    items: make("Pizza", [
-      // Classic
-      { name: "Chicken Tikka Pizza (Small)", desc: "BBQ chicken, cheese, peppers, olives, tomatoes, onions, jalapeños", price: 750, tag: "Classic" },
-      { name: "Chicken Tikka Pizza (Medium)", price: 1300, tag: "Classic" },
-      { name: "Chicken Tikka Pizza (Large)", price: 1550, tag: "Classic" },
-      { name: "Chicken Tikka Pizza (XL)", price: 1900, tag: "Classic" },
-      { name: "Chicken Fajita Pizza (Medium)", desc: "Fajita chicken, cheese, peppers, olives, tomatoes, onions", price: 1300, tag: "Classic" },
-      { name: "Chicken Tandori Pizza (Medium)", desc: "Tandoori chicken, cheese, tomatoes, onions", price: 1300, tag: "Classic" },
-      { name: "Hot & Spicy Pizza (Medium)", desc: "BBQ chicken, cheese, peppers, olives, tomatoes, onions", price: 1300, tag: "Classic" },
-      { name: "Achari Pizza (Medium)", desc: "Special achari chicken, cheese, peppers, olives, tomatoes, onions", price: 1300, tag: "Classic" },
-      { name: "Cheese Lover Pizza (Medium)", desc: "Special white sauce + lots of cheese", price: 1300, tag: "Classic" },
-      { name: "Mexican Pizza (Medium)", desc: "Mexican chicken, sweet corn, peppers, olives, jalapeños, mushrooms", price: 1300, tag: "Classic" },
-      { name: "Veggie Pizza (Medium)", desc: "Sweet corn, cheese, sweet peppers, onions, olives, jalapeños, mushrooms", price: 1300, tag: "Classic" },
-      // Royal
-      { name: "Crown Pizza (Medium)", desc: "BBQ chicken, cheese, peppers, olives, tomatoes, onions, jalapeños", price: 1450, tag: "Royal" },
-      { name: "Kabab Slice Pizza (Medium)", desc: "Chicken, cheese, peppers, olives, beef kabab", price: 1450, tag: "Royal" },
-      { name: "Malai Boti Pizza (Medium)", desc: "Malai chicken, cheese, tomatoes, onions, special malai sauce", price: 1450, tag: "Royal" },
-      { name: "Multi Flavoured Pizza (Medium)", desc: "Choose your own flavour", price: 1450, tag: "Royal" },
-      { name: "Donner Pizza (Medium)", desc: "Chicken, extra cheese, peppers, olives, tomatoes, onions, jalapeños, mushrooms", price: 1450, tag: "Royal" },
-      // Signature
-      { name: "Behari Kabab Pizza (Medium)", desc: "Chicken, cheese, peppers, olives, tomatoes, onions, beef kabab on each slice", price: 1500, tag: "Signature" },
-      { name: "Kabab Crust Stuffed Pizza (Medium)", desc: "Chicken, cheese, peppers, olives, tomatoes, onions, beef kabab crust filled", price: 1500, tag: "Signature" },
-      { name: "Shahi Malai Donner Pizza (Medium)", desc: "Malai chicken, cheese, special malai sauce", price: 1500, tag: "Signature" },
-      { name: "Double Donner Pizza (Medium)", desc: "Double topping", price: 1500, tag: "Signature" },
-      { name: "Malai Crown Pizza (Medium)", price: 1500, tag: "Signature" },
-      { name: "Kabab Crown Pizza (Medium)", desc: "Special chicken, cheese, peppers, olives, tomatoes, onions, jalapeños, mushrooms, beef kabab", price: 1500, tag: "Signature" },
+    items: make("Classic Pizza", [
+      { name: "Chicken Tikka Pizza (Small)", desc: "BBQ chicken, cheese, green peppers, black olives, tomatoes, onions, jalapeños", price: 750 },
+      { name: "Chicken Tikka Pizza (Medium)", price: 1300 },
+      { name: "Chicken Tikka Pizza (Large)", price: 1550 },
+      { name: "Chicken Tikka Pizza (XL)", price: 1900 },
+      { name: "Chicken Fajita Pizza (Medium)", desc: "Fajita chicken, cheese, green peppers, black olives, tomatoes, onions", price: 1300 },
+      { name: "Chicken Tandori Pizza (Medium)", desc: "Tandoori chicken, cheese, tomatoes, onions, jalapeños", price: 1300 },
+      { name: "Hot & Spicy Pizza (Medium)", desc: "Spicy BBQ chicken, cheese, green peppers, black olives, tomatoes, onions", price: 1300 },
+      { name: "Achari Pizza (Medium)", desc: "Special achari chicken, cheese, green peppers, black olives, tomatoes, onions", price: 1300 },
+      { name: "Cheese Lover Pizza (Medium)", desc: "Special white sauce + lots of cheese", price: 1300 },
+      { name: "Mexican Pizza (Medium)", desc: "Mexican chicken, sweet corn, cheese, green peppers, black olives, jalapeños, mushrooms", price: 1300 },
+      { name: "Veggie Pizza (Medium)", desc: "Sweet corn, cheese, green peppers, onions, black olives, jalapeños, mushrooms", price: 1300 },
+    ]),
+  },
+  {
+    title: "Royal Pizza",
+    subtitle: "Small · Medium · Large · XL",
+    img: menuPizza,
+    items: make("Royal Pizza", [
+      { name: "Crown Pizza (Small)", desc: "BBQ chicken, cheese, green peppers, black olives, tomatoes, onions, jalapeños", price: 950 },
+      { name: "Crown Pizza (Medium)", price: 1450 },
+      { name: "Crown Pizza (Large)", price: 1750 },
+      { name: "Crown Pizza (XL)", price: 2100 },
+      { name: "Kabab Slice Pizza (Medium)", desc: "Chicken, cheese, green peppers, black olives, beef kabab", price: 1450 },
+      { name: "Malai Boti Pizza (Medium)", desc: "Malai chicken, cheese, tomatoes, onions, special malai sauce", price: 1450 },
+      { name: "Multi Flavoured Pizza (Medium)", desc: "Choose your own flavour", price: 1450 },
+      { name: "Donner Pizza (Medium)", desc: "Chicken, extra cheese, green peppers, black olives, tomatoes, onions, jalapeños, mushrooms", price: 1450 },
+    ]),
+  },
+  {
+    title: "Signature Pizza",
+    subtitle: "Medium · Large · XL",
+    img: menuPizza,
+    items: make("Signature Pizza", [
+      { name: "Behari Kabab Pizza (Medium)", desc: "Chicken, cheese, green peppers, black olives, tomatoes, onions, beef kabab on each slice", price: 1500 },
+      { name: "Behari Kabab Pizza (Large)", price: 2000 },
+      { name: "Behari Kabab Pizza (XL)", price: 2400 },
+      { name: "Kabab Crust Stuffed Pizza (Medium)", desc: "Chicken, cheese, green peppers, black olives, tomatoes, onions, beef kabab crust filled", price: 1500 },
+      { name: "Shahi Malai Donner Pizza (Medium)", desc: "Malai chicken, cheese, special malai sauce", price: 1500 },
+      { name: "Double Donner Pizza (Medium)", desc: "Double topping", price: 1500 },
+      { name: "Malai Crown Pizza (Medium)", price: 1500 },
+      { name: "Kabab Crown Pizza (Medium)", desc: "Special chicken, cheese, green peppers, black olives, tomatoes, onions, jalapeños, mushrooms, beef kabab", price: 1500 },
+    ]),
+  },
+  {
+    title: "Cheese Topping",
+    subtitle: "Add extra cheese to any pizza",
+    img: menuPizza,
+    items: make("Cheese Topping", [
+      { name: "Chicken Topping (Small)", price: 100 },
+      { name: "Chicken Topping (Medium)", price: 150 },
+      { name: "Chicken Topping (Large)", price: 200 },
+      { name: "Chicken Topping (XL)", price: 250 },
+      { name: "Cheese Topping (Small)", price: 150 },
+      { name: "Cheese Topping (Medium)", price: 200 },
+      { name: "Cheese Topping (Large)", price: 250 },
+      { name: "Cheese Topping (XL)", price: 300 },
     ]),
   },
   {
@@ -103,7 +134,7 @@ export const menuSections: MenuSection[] = [
   },
   {
     title: "Burger Deals",
-    subtitle: "Zinger & Petty burger combos",
+    subtitle: "Zinger burger combos & kids deal",
     img: menuBurger,
     items: make("Burger Deal", [
       { name: "Burger D-1", desc: "1 Zinger Burger, 1 Small Fries, 1 Regular Drink", price: 650, tag: "Deal" },
@@ -111,45 +142,28 @@ export const menuSections: MenuSection[] = [
       { name: "Burger D-3", desc: "3 Zinger Burgers, 1 Ltr Drink", price: 1150, tag: "Deal" },
       { name: "Burger D-4", desc: "4 Zinger Burgers, 1 Ltr Drink", price: 1500, tag: "Deal" },
       { name: "Burger D-5", desc: "5 Zinger Burgers, 1.5 Ltr Drink, 1 Small Fries", price: 2000, tag: "Deal" },
-      { name: "Petty Deal 1", desc: "1 Petty Burger, 2 Nuggets, 1 Regular Drink", price: 499, tag: "Deal" },
-      { name: "Petty Deal 2", desc: "2 Petty Burgers, 2 Regular Drinks", price: 750, tag: "Deal" },
-      { name: "Petty Deal 3", desc: "3 Petty Burgers, 1 Litre Drink", price: 1000, tag: "Deal" },
-      { name: "Petty Deal 4", desc: "4 Petty Burgers, 1 Litre Drink", price: 1300, tag: "Deal" },
-      { name: "Petty Deal 5", desc: "5 Petty Burgers, 1.5 Litre Drink", price: 1530, tag: "Deal" },
       { name: "Kids Deal", desc: "Small Fries, 4 Nuggets", price: 480, tag: "Kids" },
     ]),
   },
   {
-    title: "Wraps & Paratha Rolls",
+    title: "Paratha Rolls & Wraps",
     subtitle: "Soft tortillas & flaky paratha rolls",
     img: menuWrap,
     items: make("Wrap", [
-      { name: "Chicken Wrap", price: 320 },
-      { name: "Zinger Wrap", price: 380 },
-      { name: "Grill Chicken Wrap", price: 420 },
-      { name: "Arabic Wrap", price: 450 },
       { name: "Chicken Paratha Roll", price: 300 },
       { name: "Zinger Paratha Roll", price: 350 },
       { name: "Chicken Cheese Paratha Roll", price: 380 },
       { name: "Zinger Cheese Paratha Roll", price: 400 },
       { name: "Kabab Paratha Roll", price: 350 },
       { name: "Paratha Sandwich", price: 300 },
+      { name: "Chicken Wrap", price: 320 },
+      { name: "Zinger Wrap", price: 380 },
+      { name: "Grill Chicken Wrap", price: 420 },
+      { name: "Arabic Wrap", price: 450 },
     ]),
   },
   {
-    title: "Wrap Deals",
-    subtitle: "Chicken wrap combos with nuggets & drinks",
-    img: menuWrap,
-    items: make("Wrap Deal", [
-      { name: "Wrap Deal 1", desc: "1 Chicken Wrap, 2 Nuggets, 1 Regular Drink", price: 480, tag: "Deal" },
-      { name: "Wrap Deal 2", desc: "2 Chicken Wraps, 4 Nuggets, 2 Regular Drinks", price: 950, tag: "Deal" },
-      { name: "Wrap Deal 3", desc: "3 Chicken Wraps, 6 Nuggets, 1 Litre Drink", price: 1300, tag: "Deal" },
-      { name: "Wrap Deal 4", desc: "4 Chicken Wraps, 8 Nuggets, 1.5 Litre Drink", price: 1700, tag: "Deal" },
-      { name: "Wrap Deal 5", desc: "5 Chicken Wraps, 10 Nuggets, 1.5 Litre Drink", price: 2250, tag: "Deal" },
-    ]),
-  },
-  {
-    title: "Shawarma & Arabic Platters",
+    title: "Shawarma & Arabic Platter",
     subtitle: "Shawarmas, Arabic platter & shawarma deals",
     img: menuPlatter,
     items: make("Shawarma", [
@@ -166,7 +180,7 @@ export const menuSections: MenuSection[] = [
     ]),
   },
   {
-    title: "Sides — Wings, Nuggets, Hot Shot & Fried Chicken",
+    title: "Wings, Nuggets, Hot Shot & Fried Chicken",
     subtitle: "Crispy, saucy, share-worthy bites",
     img: menuBurger,
     items: make("Sides", [
@@ -240,3 +254,8 @@ export const allItems: MenuItem[] = menuSections.flatMap((s) => s.items);
 export const findItem = (id: string) => allItems.find((i) => i.id === id);
 
 export const formatPrice = (n: number) => `Rs. ${n.toLocaleString("en-PK")}`;
+
+// Order policy from menu card
+export const MIN_ORDER = 1000;
+export const MIN_ORDER_MEMBERS = 1200;
+export const FREE_DELIVERY_KM = 3;
