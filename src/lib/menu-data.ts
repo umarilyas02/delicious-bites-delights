@@ -38,54 +38,93 @@ const make = (
   });
 };
 
+// Expand a list of pizza flavours into one MenuItem per size, using a shared
+// price tier. Order of `sizes` controls which size appears first as default.
+const expandPizzas = (
+  category: string,
+  sizes: { size: "Small" | "Medium" | "Large" | "XL"; price: number }[],
+  flavours: { name: string; desc?: string; tag?: string }[],
+): MenuItem[] => {
+  const rows: Omit<MenuItem, "id" | "category">[] = [];
+  for (const f of flavours) {
+    for (const s of sizes) {
+      rows.push({
+        name: `${f.name} (${s.size})`,
+        desc: s.size === sizes[0].size ? f.desc : undefined,
+        tag: s.size === sizes[0].size ? f.tag : undefined,
+        price: s.price,
+      });
+    }
+  }
+  return make(category, rows);
+};
+
 export const menuSections: MenuSection[] = [
   {
     title: "Classic Pizza",
     subtitle: "Small · Medium · Large · XL",
     img: menuPizza,
-    items: make("Classic Pizza", [
-      { name: "Chicken Tikka Pizza (Small)", desc: "BBQ chicken, cheese, green peppers, black olives, tomatoes, onions, jalapeños", price: 750 },
-      { name: "Chicken Tikka Pizza (Medium)", price: 1300 },
-      { name: "Chicken Tikka Pizza (Large)", price: 1550 },
-      { name: "Chicken Tikka Pizza (XL)", price: 1900 },
-      { name: "Chicken Fajita Pizza (Medium)", desc: "Fajita chicken, cheese, green peppers, black olives, tomatoes, onions", price: 1300 },
-      { name: "Chicken Tandori Pizza (Medium)", desc: "Tandoori chicken, cheese, tomatoes, onions, jalapeños", price: 1300 },
-      { name: "Hot & Spicy Pizza (Medium)", desc: "Spicy BBQ chicken, cheese, green peppers, black olives, tomatoes, onions", price: 1300 },
-      { name: "Achari Pizza (Medium)", desc: "Special achari chicken, cheese, green peppers, black olives, tomatoes, onions", price: 1300 },
-      { name: "Cheese Lover Pizza (Medium)", desc: "Special white sauce + lots of cheese", price: 1300 },
-      { name: "Mexican Pizza (Medium)", desc: "Mexican chicken, sweet corn, cheese, green peppers, black olives, jalapeños, mushrooms", price: 1300 },
-      { name: "Veggie Pizza (Medium)", desc: "Sweet corn, cheese, green peppers, onions, black olives, jalapeños, mushrooms", price: 1300 },
-    ]),
+    items: expandPizzas(
+      "Classic Pizza",
+      [
+        { size: "Small", price: 750 },
+        { size: "Medium", price: 1300 },
+        { size: "Large", price: 1550 },
+        { size: "XL", price: 1900 },
+      ],
+      [
+        { name: "Chicken Tikka Pizza", desc: "BBQ chicken, cheese, green peppers, black olives, tomatoes, onions, jalapeños" },
+        { name: "Chicken Fajita Pizza", desc: "Fajita chicken, cheese, green peppers, black olives, tomatoes, onions" },
+        { name: "Chicken Tandori Pizza", desc: "Tandoori chicken, cheese, tomatoes, onions, jalapeños" },
+        { name: "Hot & Spicy Pizza", desc: "Spicy BBQ chicken, cheese, green peppers, black olives, tomatoes, onions" },
+        { name: "Achari Pizza", desc: "Special achari chicken, cheese, green peppers, black olives, tomatoes, onions" },
+        { name: "Cheese Lover Pizza", desc: "Special white sauce + lots of cheese" },
+        { name: "Mexican Pizza", desc: "Mexican chicken, sweet corn, cheese, green peppers, black olives, jalapeños, mushrooms" },
+        { name: "Veggie Pizza", desc: "Sweet corn, cheese, green peppers, onions, black olives, jalapeños, mushrooms" },
+      ],
+    ),
   },
   {
     title: "Royal Pizza",
     subtitle: "Small · Medium · Large · XL",
     img: menuPizza,
-    items: make("Royal Pizza", [
-      { name: "Crown Pizza (Small)", desc: "BBQ chicken, cheese, green peppers, black olives, tomatoes, onions, jalapeños", price: 950 },
-      { name: "Crown Pizza (Medium)", price: 1450 },
-      { name: "Crown Pizza (Large)", price: 1750 },
-      { name: "Crown Pizza (XL)", price: 2100 },
-      { name: "Kabab Slice Pizza (Medium)", desc: "Chicken, cheese, green peppers, black olives, beef kabab", price: 1450 },
-      { name: "Malai Boti Pizza (Medium)", desc: "Malai chicken, cheese, tomatoes, onions, special malai sauce", price: 1450 },
-      { name: "Multi Flavoured Pizza (Medium)", desc: "Choose your own flavour", price: 1450 },
-      { name: "Donner Pizza (Medium)", desc: "Chicken, extra cheese, green peppers, black olives, tomatoes, onions, jalapeños, mushrooms", price: 1450 },
-    ]),
+    items: expandPizzas(
+      "Royal Pizza",
+      [
+        { size: "Small", price: 950 },
+        { size: "Medium", price: 1450 },
+        { size: "Large", price: 1750 },
+        { size: "XL", price: 2100 },
+      ],
+      [
+        { name: "Crown Pizza", desc: "BBQ chicken, cheese, green peppers, black olives, tomatoes, onions, jalapeños" },
+        { name: "Kabab Slice Pizza", desc: "Chicken, cheese, green peppers, black olives, beef kabab" },
+        { name: "Malai Boti Pizza", desc: "Malai chicken, cheese, tomatoes, onions, special malai sauce" },
+        { name: "Multi Flavoured Pizza", desc: "Choose your own flavour" },
+        { name: "Donner Pizza", desc: "Chicken, extra cheese, green peppers, black olives, tomatoes, onions, jalapeños, mushrooms" },
+      ],
+    ),
   },
   {
     title: "Signature Pizza",
     subtitle: "Medium · Large · XL",
     img: menuPizza,
-    items: make("Signature Pizza", [
-      { name: "Behari Kabab Pizza (Medium)", desc: "Chicken, cheese, green peppers, black olives, tomatoes, onions, beef kabab on each slice", price: 1500 },
-      { name: "Behari Kabab Pizza (Large)", price: 2000 },
-      { name: "Behari Kabab Pizza (XL)", price: 2400 },
-      { name: "Kabab Crust Stuffed Pizza (Medium)", desc: "Chicken, cheese, green peppers, black olives, tomatoes, onions, beef kabab crust filled", price: 1500 },
-      { name: "Shahi Malai Donner Pizza (Medium)", desc: "Malai chicken, cheese, special malai sauce", price: 1500 },
-      { name: "Double Donner Pizza (Medium)", desc: "Double topping", price: 1500 },
-      { name: "Malai Crown Pizza (Medium)", price: 1500 },
-      { name: "Kabab Crown Pizza (Medium)", desc: "Special chicken, cheese, green peppers, black olives, tomatoes, onions, jalapeños, mushrooms, beef kabab", price: 1500 },
-    ]),
+    items: expandPizzas(
+      "Signature Pizza",
+      [
+        { size: "Medium", price: 1500 },
+        { size: "Large", price: 2000 },
+        { size: "XL", price: 2400 },
+      ],
+      [
+        { name: "Behari Kabab Pizza", desc: "Chicken, cheese, green peppers, black olives, tomatoes, onions, beef kabab on each slice" },
+        { name: "Kabab Crust Stuffed Pizza", desc: "Chicken, cheese, green peppers, black olives, tomatoes, onions, beef kabab crust filled" },
+        { name: "Shahi Malai Donner Pizza", desc: "Malai chicken, cheese, special malai sauce" },
+        { name: "Double Donner Pizza", desc: "Double topping" },
+        { name: "Malai Crown Pizza" },
+        { name: "Kabab Crown Pizza", desc: "Special chicken, cheese, green peppers, black olives, tomatoes, onions, jalapeños, mushrooms, beef kabab" },
+      ],
+    ),
   },
   {
     title: "Cheese Topping",

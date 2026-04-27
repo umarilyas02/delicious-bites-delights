@@ -3,6 +3,15 @@ import { Minus, Plus, Trash2, ShoppingBag, ArrowRight } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 import { findItem, formatPrice } from "@/lib/menu-data";
 
+const SIZE_RE = /\s*\((Small|Medium|Large|XL)\)\s*$/;
+const SIZE_LABEL: Record<string, string> = { Small: "S", Medium: "M", Large: "L", XL: "XL" };
+
+function splitSize(name: string): { base: string; size: string | null } {
+  const m = name.match(SIZE_RE);
+  if (!m) return { base: name, size: null };
+  return { base: name.replace(SIZE_RE, "").trim(), size: m[1] };
+}
+
 export const Route = createFileRoute("/cart")({
   head: () => ({
     meta: [
@@ -51,10 +60,18 @@ function CartPage() {
           {lines.map((line) => {
             const item = findItem(line.id);
             if (!item) return null;
+            const { base, size } = splitSize(item.name);
             return (
               <li key={line.id} className="py-5 flex flex-wrap gap-4 items-center">
                 <div className="flex-1 min-w-[180px]">
-                  <h3 className="font-semibold">{item.name}</h3>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="font-semibold">{base}</h3>
+                    {size && (
+                      <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary uppercase tracking-wider">
+                        Size {SIZE_LABEL[size] ?? size}
+                      </span>
+                    )}
+                  </div>
                   <p className="text-sm text-muted-foreground">{item.category} · {formatPrice(item.price)}</p>
                 </div>
 
