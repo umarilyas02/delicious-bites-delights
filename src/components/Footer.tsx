@@ -28,21 +28,28 @@ export function Footer() {
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wider text-accent mb-4">Visit</h4>
           <p className="text-sm text-cream/70 leading-relaxed">
-            123 Flavor Street<br />
-            Downtown District<br />
+            Chenab Rangers Road<br />
+            Near Cash & Carry<br />
             Open 11am – 11pm
           </p>
         </div>
 
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wider text-accent mb-4">Order</h4>
-          <a href="tel:+15551234567" className="flex items-center gap-2 text-sm text-cream/70 hover:text-cream transition-colors">
-            <Phone className="h-4 w-4" /> +1 (555) 123-4567
+          <a href="tel:+923030838389" className="flex items-center gap-2 text-sm text-cream/70 hover:text-cream transition-colors">
+            <Phone className="h-4 w-4" /> 0303 083 83 89
+          </a>
+          <a href="tel:+925245819199" className="mt-2 flex items-center gap-2 text-sm text-cream/70 hover:text-cream transition-colors">
+            <Phone className="h-4 w-4" /> 0524 581 919
           </a>
         </div>
       </div>
-      <div className="border-t border-cream/10 py-6 text-center text-xs text-cream/50">
-        © {new Date().getFullYear()} Delicious Bites. All rights reserved.
+      <div className="border-t border-cream/10 py-6 text-center text-xs text-cream/50 flex flex-col sm:flex-row gap-2 justify-center items-center">
+        <span>© {new Date().getFullYear()} Delicious Bites. All rights reserved.</span>
+        <span className="hidden sm:inline">·</span>
+        <Link to="/settings/message-template" className="hover:text-cream transition-colors underline-offset-4 hover:underline">
+          Edit WhatsApp message template
+        </Link>
       </div>
     </footer>
   );

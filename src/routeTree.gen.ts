@@ -15,6 +15,7 @@ import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SettingsMessageTemplateRouteImport } from './routes/settings.message-template'
 
 const MenuRoute = MenuRouteImport.update({
   id: '/menu',
@@ -46,6 +47,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsMessageTemplateRoute = SettingsMessageTemplateRouteImport.update({
+  id: '/settings/message-template',
+  path: '/settings/message-template',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
+  '/settings/message-template': typeof SettingsMessageTemplateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
+  '/settings/message-template': typeof SettingsMessageTemplateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,13 +79,36 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
+  '/settings/message-template': typeof SettingsMessageTemplateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/cart' | '/checkout' | '/contact' | '/menu'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/checkout'
+    | '/contact'
+    | '/menu'
+    | '/settings/message-template'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/cart' | '/checkout' | '/contact' | '/menu'
-  id: '__root__' | '/' | '/about' | '/cart' | '/checkout' | '/contact' | '/menu'
+  to:
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/checkout'
+    | '/contact'
+    | '/menu'
+    | '/settings/message-template'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/checkout'
+    | '/contact'
+    | '/menu'
+    | '/settings/message-template'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -87,6 +118,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
   MenuRoute: typeof MenuRoute
+  SettingsMessageTemplateRoute: typeof SettingsMessageTemplateRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -133,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings/message-template': {
+      id: '/settings/message-template'
+      path: '/settings/message-template'
+      fullPath: '/settings/message-template'
+      preLoaderRoute: typeof SettingsMessageTemplateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -143,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
   MenuRoute: MenuRoute,
+  SettingsMessageTemplateRoute: SettingsMessageTemplateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

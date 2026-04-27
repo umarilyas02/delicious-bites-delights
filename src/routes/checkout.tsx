@@ -4,6 +4,7 @@ import { z } from "zod";
 import { ArrowLeft, Store, Bike, MessageCircle } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 import { findItem, formatPrice } from "@/lib/menu-data";
+import { loadTemplate, renderTemplate, type TemplateVars } from "@/lib/whatsapp-template";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -94,27 +95,29 @@ function CheckoutPage() {
         ? `Order Type: Pickup\nPickup Time: ${d.pickupTime}`
         : `Order Type: Delivery\nAddress: ${d.address}\nCity: ${d.city}`;
 
-    const message = [
-      `*New Order — Delicious Bites*`,
-      `Order ID: ${orderId}`,
-      ``,
-      `*Customer*`,
-      `Name: ${d.name}`,
-      `Phone: ${d.phone}`,
-      d.email ? `Email: ${d.email}` : null,
-      ``,
-      `*${methodBlock}*`,
-      d.notes ? `Notes: ${d.notes}` : null,
-      ``,
-      `*Items*`,
-      itemLines,
-      ``,
-      `Subtotal: ${formatPrice(subtotal)}`,
-      d.method === "delivery" ? `Delivery Fee: ${formatPrice(fee)}` : `Pickup: Free`,
-      `*Total: ${formatPrice(total)}*`,
-    ]
-      .filter(Boolean)
-      .join("\n");
+    const email = d.email ?? "";
+    const notes = d.notes ?? "";
+    const vars: TemplateVars = {
+      orderId,
+      name: d.name,
+      phone: d.phone,
+      email,
+      emailLine: email ? `Email: ${email}` : "",
+      method: d.method === "pickup" ? "Pickup" : "Delivery",
+      pickupTime: d.method === "pickup" ? d.pickupTime : "",
+      address: d.method === "delivery" ? d.address : "",
+      city: d.method === "delivery" ? d.city : "",
+      methodBlock,
+      notes,
+      notesLine: notes ? `Notes: ${notes}` : "",
+      items: itemLines,
+      subtotal: formatPrice(subtotal),
+      fee: formatPrice(fee),
+      feeLine: d.method === "delivery" ? `Delivery Fee: ${formatPrice(fee)}` : "Pickup: Free",
+      total: formatPrice(total),
+    };
+
+    const message = renderTemplate(loadTemplate(), vars);
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     clear();
@@ -270,6 +273,12 @@ function CheckoutPage() {
           <p className="mt-3 text-xs text-muted-foreground text-center">
             Your order will be sent to <span className="font-semibold">0303 083 83 89</span> on WhatsApp for confirmation.
           </p>
+          <Link
+            to="/settings/message-template"
+            className="mt-2 block text-center text-[11px] text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
+          >
+            Customize message template
+          </Link>
         </aside>
       </form>
     </div>
