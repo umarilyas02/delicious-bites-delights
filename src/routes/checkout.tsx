@@ -238,10 +238,19 @@ function CheckoutPage() {
             {lines.map((l) => {
               const it = findItem(l.id);
               if (!it) return null;
+              const m = it.name.match(/\s*\((Small|Medium|Large|XL)\)\s*$/);
+              const size = m ? m[1] : null;
+              const base = m ? it.name.replace(/\s*\((Small|Medium|Large|XL)\)\s*$/, "").trim() : it.name;
+              const sizeLabel = size === "Small" ? "S" : size === "Medium" ? "M" : size === "Large" ? "L" : size === "XL" ? "XL" : null;
               return (
                 <li key={l.id} className="flex justify-between gap-3">
                   <span className="text-foreground">
-                    {l.qty}× {it.name}
+                    {l.qty}× {base}
+                    {sizeLabel && (
+                      <span className="ml-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded bg-primary/10 text-primary uppercase">
+                        {sizeLabel}
+                      </span>
+                    )}
                   </span>
                   <span className="font-medium">{formatPrice(it.price * l.qty)}</span>
                 </li>
