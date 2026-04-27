@@ -29,11 +29,15 @@ function AddButton({ id }: { id: string }) {
         setAdded(true);
         window.setTimeout(() => setAdded(false), 1200);
       }}
-      className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3.5 py-1.5 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
+      className={`inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold transition-colors min-h-10 active:scale-95 ${
+        added
+          ? "bg-emerald-600 text-white"
+          : "bg-primary text-primary-foreground hover:bg-primary/90"
+      }`}
       aria-label="Add to cart"
     >
-      {added ? <Check className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
-      {added ? "Added" : "Add"}
+      {added ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+      {added ? "Added" : "Add to cart"}
     </button>
   );
 }
