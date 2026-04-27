@@ -29,10 +29,11 @@ function ContactPage() {
       <section className="mx-auto max-w-7xl px-6 py-20 grid gap-12 lg:grid-cols-2">
         <div className="space-y-6">
           {[
-            { icon: MapPin, title: "Visit Us", lines: ["Chenab Rangers Road", "Near Cash & Carry"] },
-            { icon: Phone, title: "Call to Order", lines: ["0303 083 83 89", "0524 581 919"] },
+            { icon: MapPin, title: "Visit Us", lines: ["Rangers Road", "Near Cash & Carry"] },
+            { icon: Phone, title: "Call to Order", lines: ["0303 083 83 89", "052 458 1919"] },
             { icon: MessageCircle, title: "WhatsApp Order", lines: ["0303 083 83 89"] },
             { icon: Clock, title: "Opening Hours", lines: ["Monday – Sunday", "11:00 AM – 11:00 PM"] },
+            { icon: MapPin, title: "Order Policy", lines: ["Min order Rs. 1,000", "Free delivery within 3 km", "Members min order Rs. 1,200"] },
           ].map((c) => (
             <div key={c.title} className="flex gap-5 p-6 rounded-2xl bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
               <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
