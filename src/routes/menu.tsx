@@ -92,8 +92,7 @@ function QuickOrderBar() {
           aria-label="Send order on WhatsApp"
         >
           <MessageCircle className="h-4 w-4" />
-          <span className="hidden xs:inline sm:inline">WhatsApp</span>
-          <span className="xs:hidden sm:hidden">Order</span>
+          <span>WhatsApp</span>
         </button>
       </div>
     </div>
