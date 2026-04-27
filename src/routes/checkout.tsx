@@ -17,7 +17,7 @@ export const Route = createFileRoute("/checkout")({
   component: CheckoutPage,
 });
 
-const DELIVERY_FEE = 3.5;
+const DELIVERY_FEE = 100; // Rs.
 const WHATSAPP_NUMBER = "923030838389"; // 0303 083 83 89 in international format
 
 const baseSchema = z.object({

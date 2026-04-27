@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, MapPin, Clock, Mail } from "lucide-react";
+import { Phone, MapPin, Clock, MessageCircle } from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -29,9 +29,9 @@ function ContactPage() {
       <section className="mx-auto max-w-7xl px-6 py-20 grid gap-12 lg:grid-cols-2">
         <div className="space-y-6">
           {[
-            { icon: MapPin, title: "Visit Us", lines: ["123 Flavor Street", "Downtown District"] },
-            { icon: Phone, title: "Call to Order", lines: ["+1 (555) 123-4567"] },
-            { icon: Mail, title: "Email", lines: ["hello@deliciousbites.com"] },
+            { icon: MapPin, title: "Visit Us", lines: ["Chenab Rangers Road", "Near Cash & Carry"] },
+            { icon: Phone, title: "Call to Order", lines: ["0303 083 83 89", "0524 581 919"] },
+            { icon: MessageCircle, title: "WhatsApp Order", lines: ["0303 083 83 89"] },
             { icon: Clock, title: "Opening Hours", lines: ["Monday – Sunday", "11:00 AM – 11:00 PM"] },
           ].map((c) => (
             <div key={c.title} className="flex gap-5 p-6 rounded-2xl bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
