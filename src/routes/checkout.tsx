@@ -1,7 +1,7 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { z } from "zod";
-import { ArrowLeft, Store, Bike } from "lucide-react";
+import { ArrowLeft, Store, Bike, MessageCircle } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 import { findItem, formatPrice } from "@/lib/menu-data";
 
@@ -17,7 +17,8 @@ export const Route = createFileRoute("/checkout")({
   component: CheckoutPage,
 });
 
-const DELIVERY_FEE = 3.5;
+const DELIVERY_FEE = 100; // Rs.
+const WHATSAPP_NUMBER = "923030838389"; // 0303 083 83 89 in international format
 
 const baseSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -41,7 +42,6 @@ const orderSchema = z.discriminatedUnion("method", [pickupSchema, deliverySchema
 
 function CheckoutPage() {
   const { lines, subtotal, count, clear } = useCart();
-  const navigate = useNavigate();
   const [method, setMethod] = useState<"pickup" | "delivery">("pickup");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -79,28 +79,47 @@ function CheckoutPage() {
     setSubmitting(true);
 
     const orderId = `DB-${Date.now().toString(36).toUpperCase()}`;
-    const order = {
-      id: orderId,
-      placedAt: new Date().toISOString(),
-      details: parsed.data,
-      items: lines
-        .map((l) => {
-          const it = findItem(l.id);
-          return it ? { id: it.id, name: it.name, price: it.price, qty: l.qty } : null;
-        })
-        .filter(Boolean),
-      subtotal,
-      fee,
-      total,
-    };
+    const d = parsed.data;
+    const itemLines = lines
+      .map((l) => {
+        const it = findItem(l.id);
+        if (!it) return null;
+        return `• ${l.qty}× ${it.name} — ${formatPrice(it.price * l.qty)}`;
+      })
+      .filter(Boolean)
+      .join("\n");
 
-    try {
-      sessionStorage.setItem("db_last_order", JSON.stringify(order));
-    } catch {
-      // ignore
-    }
+    const methodBlock =
+      d.method === "pickup"
+        ? `Order Type: Pickup\nPickup Time: ${d.pickupTime}`
+        : `Order Type: Delivery\nAddress: ${d.address}\nCity: ${d.city}`;
+
+    const message = [
+      `*New Order — Delicious Bites*`,
+      `Order ID: ${orderId}`,
+      ``,
+      `*Customer*`,
+      `Name: ${d.name}`,
+      `Phone: ${d.phone}`,
+      d.email ? `Email: ${d.email}` : null,
+      ``,
+      `*${methodBlock}*`,
+      d.notes ? `Notes: ${d.notes}` : null,
+      ``,
+      `*Items*`,
+      itemLines,
+      ``,
+      `Subtotal: ${formatPrice(subtotal)}`,
+      d.method === "delivery" ? `Delivery Fee: ${formatPrice(fee)}` : `Pickup: Free`,
+      `*Total: ${formatPrice(total)}*`,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     clear();
-    navigate({ to: "/order-confirmation" });
+    window.open(url, "_blank", "noopener,noreferrer");
+    setSubmitting(false);
   };
 
   const inputCls =
@@ -243,12 +262,13 @@ function CheckoutPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-60"
+            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white hover:opacity-95 transition-opacity disabled:opacity-60"
           >
-            {submitting ? "Placing order…" : "Place order request"}
+            <MessageCircle className="h-4 w-4" />
+            {submitting ? "Opening WhatsApp…" : "Send Order on WhatsApp"}
           </button>
           <p className="mt-3 text-xs text-muted-foreground text-center">
-            We'll call to confirm your order and arrange payment.
+            Your order will be sent to <span className="font-semibold">0303 083 83 89</span> on WhatsApp for confirmation.
           </p>
         </aside>
       </form>
