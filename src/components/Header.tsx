@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, Pizza } from "lucide-react";
+import { Menu, X, Pizza, ShoppingBag } from "lucide-react";
+import { useCart } from "@/lib/cart-context";
 
 const links = [
   { to: "/", label: "Home" },
@@ -11,6 +12,7 @@ const links = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { count } = useCart();
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md bg-background/80 border-b border-border">
@@ -35,20 +37,40 @@ export function Header() {
             </Link>
           ))}
           <Link
-            to="/contact"
-            className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
+            to="/cart"
+            className="relative inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
           >
-            Order Now
+            <ShoppingBag className="h-4 w-4" />
+            Cart
+            {count > 0 && (
+              <span className="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-cream px-1.5 text-xs font-bold text-primary">
+                {count}
+              </span>
+            )}
           </Link>
         </nav>
 
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="md:hidden flex items-center gap-3">
+          <Link
+            to="/cart"
+            aria-label="Cart"
+            className="relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground"
+          >
+            <ShoppingBag className="h-4 w-4" />
+            {count > 0 && (
+              <span className="absolute -top-1 -right-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-charcoal">
+                {count}
+              </span>
+            )}
+          </Link>
+          <button
+            className="text-foreground"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -65,6 +87,13 @@ export function Header() {
               {l.label}
             </Link>
           ))}
+          <Link
+            to="/cart"
+            onClick={() => setOpen(false)}
+            className="text-base font-semibold text-primary"
+          >
+            View Cart{count > 0 ? ` (${count})` : ""}
+          </Link>
         </nav>
       )}
     </header>
