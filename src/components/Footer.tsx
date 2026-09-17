@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 
 export function Footer() {
   return (
-    <footer className="bg-charcoal text-cream mt-24">
+    <div className="bg-charcoal text-cream mt-24">
       <div className="mx-auto max-w-7xl px-6 py-16 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-2">
           <Link to="/" className="flex items-center gap-2">
@@ -55,6 +55,12 @@ export function Footer() {
           Edit WhatsApp message template
         </Link>
       </div>
-    </footer>
+      <div className="bg-charcoal/50 border-t border-cream/10 py-4 text-center text-xs text-cream/70">
+        Design and developed by{" "}
+        <a href="https://umarilyas.dev" target="_blank" rel="noopener noreferrer" className="text-cream hover:text-cream/90 transition-colors underline-offset-2 hover:underline">
+          Umar Ilyas
+        </a>
+      </div>
+    </div>
   );
 }

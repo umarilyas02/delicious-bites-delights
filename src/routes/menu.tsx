@@ -1,79 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import menuPizza from "@/assets/menu-pizza.jpg";
 import { Plus, Check, MessageCircle, ShoppingBag, X } from "lucide-react";
-import { menuSections, findItem, formatPrice, type MenuItem } from "@/lib/menu-data";
+import {
+  menuSections,
+  findItem,
+  formatPrice,
+  groupItems,
+  SIZE_LABEL,
+  type SizedGroup,
+} from "@/lib/menu-data";
 import { useCart } from "@/lib/cart-context";
 import { useState, type FormEvent } from "react";
 import { z } from "zod";
 
 const WHATSAPP_NUMBER = "923030838389";
-
-// Detect "Name (Small)" / "(Medium)" / "(Large)" / "(XL)" pattern so we can
-// collapse multiple sized variants into a single row with a size selector.
-const SIZE_RE = /\s*\((Small|Medium|Large|XL)\)\s*$/;
-const SIZE_ORDER: Record<string, number> = { Small: 0, Medium: 1, Large: 2, XL: 3 };
-const SIZE_LABEL: Record<string, string> = { Small: "S", Medium: "M", Large: "L", XL: "XL" };
-
-type SizedGroup = {
-  baseName: string;
-  desc?: string;
-  tag?: string;
-  variants: { size: string; item: MenuItem }[];
-};
-type Row = { kind: "single"; item: MenuItem } | { kind: "sized"; group: SizedGroup };
-
-function groupItems(items: MenuItem[]): Row[] {
-  const groups = new Map<string, SizedGroup>();
-  const order: string[] = [];
-  const singles: { idx: number; item: MenuItem }[] = [];
-
-  items.forEach((it, idx) => {
-    const m = it.name.match(SIZE_RE);
-    if (!m) {
-      singles.push({ idx, item: it });
-      return;
-    }
-    const baseName = it.name.replace(SIZE_RE, "").trim();
-    if (!groups.has(baseName)) {
-      groups.set(baseName, { baseName, desc: it.desc, tag: it.tag, variants: [] });
-      order.push(baseName);
-    }
-    const g = groups.get(baseName)!;
-    if (!g.desc && it.desc) g.desc = it.desc;
-    if (!g.tag && it.tag) g.tag = it.tag;
-    g.variants.push({ size: m[1], item: it });
-  });
-
-  // Sort variants by size order
-  for (const g of groups.values()) {
-    g.variants.sort((a, b) => (SIZE_ORDER[a.size] ?? 99) - (SIZE_ORDER[b.size] ?? 99));
-  }
-
-  // Preserve original ordering: emit each row at the position of its first occurrence.
-  const rows: Row[] = [];
-  const emittedGroups = new Set<string>();
-  items.forEach((it) => {
-    const m = it.name.match(SIZE_RE);
-    if (!m) {
-      rows.push({ kind: "single", item: it });
-    } else {
-      const baseName = it.name.replace(SIZE_RE, "").trim();
-      if (!emittedGroups.has(baseName)) {
-        emittedGroups.add(baseName);
-        const g = groups.get(baseName);
-        // Only group if there are 2+ variants; otherwise treat as single
-        if (g && g.variants.length >= 2) {
-          rows.push({ kind: "sized", group: g });
-        } else if (g) {
-          rows.push({ kind: "single", item: g.variants[0].item });
-        }
-      }
-    }
-  });
-  // silence "unused" for singles helper retained for clarity
-  void singles;
-  return rows;
-}
 
 export const Route = createFileRoute("/menu")({
   head: () => ({

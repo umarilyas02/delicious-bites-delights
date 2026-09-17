@@ -294,6 +294,65 @@ export const findItem = (id: string) => allItems.find((i) => i.id === id);
 
 export const formatPrice = (n: number) => `Rs. ${n.toLocaleString("en-PK")}`;
 
+// Detect "Name (Small)" / "(Medium)" / "(Large)" / "(XL)" pattern so we can
+// collapse multiple sized variants into a single row with a size selector.
+export const SIZE_RE = /\s*\((Small|Medium|Large|XL)\)\s*$/;
+const SIZE_ORDER: Record<string, number> = { Small: 0, Medium: 1, Large: 2, XL: 3 };
+export const SIZE_LABEL: Record<string, string> = { Small: "S", Medium: "M", Large: "L", XL: "XL" };
+
+export type SizedGroup = {
+  baseName: string;
+  desc?: string;
+  tag?: string;
+  variants: { size: string; item: MenuItem }[];
+};
+export type MenuRow = { kind: "single"; item: MenuItem } | { kind: "sized"; group: SizedGroup };
+
+export function groupItems(items: MenuItem[]): MenuRow[] {
+  const groups = new Map<string, SizedGroup>();
+
+  items.forEach((it) => {
+    const m = it.name.match(SIZE_RE);
+    if (!m) return;
+    const baseName = it.name.replace(SIZE_RE, "").trim();
+    if (!groups.has(baseName)) {
+      groups.set(baseName, { baseName, desc: it.desc, tag: it.tag, variants: [] });
+    }
+    const g = groups.get(baseName)!;
+    if (!g.desc && it.desc) g.desc = it.desc;
+    if (!g.tag && it.tag) g.tag = it.tag;
+    g.variants.push({ size: m[1], item: it });
+  });
+
+  // Sort variants by size order
+  for (const g of groups.values()) {
+    g.variants.sort((a, b) => (SIZE_ORDER[a.size] ?? 99) - (SIZE_ORDER[b.size] ?? 99));
+  }
+
+  // Preserve original ordering: emit each row at the position of its first occurrence.
+  const rows: MenuRow[] = [];
+  const emittedGroups = new Set<string>();
+  items.forEach((it) => {
+    const m = it.name.match(SIZE_RE);
+    if (!m) {
+      rows.push({ kind: "single", item: it });
+    } else {
+      const baseName = it.name.replace(SIZE_RE, "").trim();
+      if (!emittedGroups.has(baseName)) {
+        emittedGroups.add(baseName);
+        const g = groups.get(baseName);
+        // Only group if there are 2+ variants; otherwise treat as single
+        if (g && g.variants.length >= 2) {
+          rows.push({ kind: "sized", group: g });
+        } else if (g) {
+          rows.push({ kind: "single", item: g.variants[0].item });
+        }
+      }
+    }
+  });
+  return rows;
+}
+
 // Order policy from menu card
 export const MIN_ORDER = 1000;
 export const MIN_ORDER_MEMBERS = 1200;

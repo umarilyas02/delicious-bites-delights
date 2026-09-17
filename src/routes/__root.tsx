@@ -26,6 +26,9 @@ function NotFoundComponent() {
   );
 }
 
+const SITE_URL = "https://delicious-bites-delights.vercel.app";
+const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -37,14 +40,15 @@ export const Route = createRootRoute({
       { property: "og:title", content: "Delicious Bites — Pizza, Burgers, Wraps & Arabic Platters" },
       { property: "og:description", content: "Hand-crafted pizzas, juicy burgers, fresh wraps and lavish Arabic platters served daily." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "canonical", href: SITE_URL },
     ],
   }),
   shellComponent: RootShell,

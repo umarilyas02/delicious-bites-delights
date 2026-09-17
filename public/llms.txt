@@ -1,0 +1,17 @@
+# Delicious Bites
+
+> Delicious Bites is a restaurant serving wood-fired pizzas, gourmet burgers, fresh wraps, and lavish Arabic platters, with online ordering via WhatsApp and phone.
+
+Located on Rangers Road, near Cash & Carry. Open daily 11am – 11pm. Free home delivery within 3 km (minimum order Rs. 1,000). Contact: 0303 083 83 89 / 052 458 1919.
+
+## Pages
+
+- [Home](https://delicious-bites-delights.vercel.app/): Overview of the restaurant, featured menu items, and highlights.
+- [Menu](https://delicious-bites-delights.vercel.app/menu): Full menu with pizzas, burgers, wraps, shawarma, Arabic platters, sides, and drinks, with prices and online ordering.
+- [About](https://delicious-bites-delights.vercel.app/about): Information about the restaurant and its story.
+- [Contact](https://delicious-bites-delights.vercel.app/contact): Location, hours, phone numbers, and contact options.
+
+## Notes
+
+- Prices are listed in Pakistani Rupees (Rs.).
+- Orders can be placed directly through the menu page via WhatsApp.
