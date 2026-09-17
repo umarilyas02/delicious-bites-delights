@@ -6,4 +6,19 @@
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig();
+// Outside the Lovable sandbox, the SSR (nitro) build is skipped unless
+// explicitly requested — without this, `vite build` only emits client
+// assets with no server, which is why Vercel served a 404 for every route.
+// The Lovable wrapper also hardcodes nitro's output dir to dist/* (tuned
+// for its Cloudflare default), which breaks Vercel's Build Output API —
+// it must land in .vercel/output/functions/__server.func + static.
+export default defineConfig({
+  nitro: {
+    preset: "vercel",
+    output: {
+      dir: "{{ rootDir }}/.vercel/output",
+      serverDir: "{{ output.dir }}/functions/__server.func",
+      publicDir: "{{ output.dir }}/static",
+    },
+  },
+});
